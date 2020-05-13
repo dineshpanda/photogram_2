@@ -56,7 +56,7 @@ class VotesController < ApplicationController
   def update_row
     @vote = Vote.find(params.fetch("id_to_modify"))
 
-    @vote.user_id = params.fetch("user_id")
+    
     @vote.photo_id = params.fetch("photo_id")
 
     if @vote.valid?
