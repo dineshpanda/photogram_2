@@ -1,0 +1,73 @@
+<div class="row mb-3">
+  <div class="col-md-8 offset-md-2">
+    <h1>
+      Vote #<%= @vote.id %> details
+    </h1>
+
+    <div class="row mb-3">
+      <div class="col">
+        <a href="/votes" class="btn btn-block btn-outline-secondary">
+          Go back
+        </a>
+      </div>
+
+      <!-- Edit link vote start -->
+      <div class="col">
+        <a href="/votes/<%= @vote.id %>/edit" class="btn btn-block btn-outline-secondary">
+          Edit vote
+        </a>
+      </div>
+      <!-- Edit link vote end -->
+
+      <!-- Delete link vote start -->
+      <div class="col">
+        <a href="/delete_vote/<%= @vote.id %>" class="btn btn-block btn-outline-secondary">
+          Delete vote
+        </a>
+      </div>
+      <!-- Delete link vote end -->
+    </div>
+
+    <dl>
+      <dt>
+        User
+      </dt>
+      <!-- Display user_id start -->
+      <dd>
+        <%= @vote.user_id %>
+      </dd>
+      <!-- Display user_id end -->
+
+      <dt>
+        Photo
+      </dt>
+      <!-- Display photo_id start -->
+      <dd>
+        <%= @vote.photo_id %>
+      </dd>
+      <!-- Display photo_id end -->
+
+      <dt>
+        Created at
+      </dt>
+      <!-- Display created_at start -->
+      <dd>
+        <%= time_ago_in_words(@vote.created_at) %> ago
+      </dd>
+      <!-- Display created_at end -->
+
+      <dt>
+        Updated at
+      </dt>
+      <!-- Display updated_at start -->
+      <dd>
+        <%= time_ago_in_words(@vote.updated_at) %> ago
+      </dd>
+      <!-- Display updated_at end -->
+    </dl>
+  </div>
+</div>
+
+<!-- Show Page Customization starts -->
+
+<!-- Show Page Customization end -->

@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the Vote resource:
+
+  # CREATE
+  get("/votes/new", { :controller => "votes", :action => "new_form" })
+  post("/create_vote", { :controller => "votes", :action => "create_row" })
+
+  # READ
+  get("/votes", { :controller => "votes", :action => "index" })
+  get("/votes/:id_to_display", { :controller => "votes", :action => "show" })
+
+  # UPDATE
+  get("/votes/:prefill_with_id/edit", { :controller => "votes", :action => "edit_form" })
+  post("/update_vote/:id_to_modify", { :controller => "votes", :action => "update_row" })
+
+  # DELETE
+  get("/delete_vote/:id_to_remove", { :controller => "votes", :action => "destroy_row" })
+
+  #------------------------------
+
   # Routes for the Photo resource:
 
   # CREATE

@@ -1,0 +1,45 @@
+<h1>
+  Add a new vote
+</h1>
+
+
+<hr>
+
+<!-- Form vote start -->
+<form action="/create_vote" method="post">
+<!-- Form vote end -->
+
+  <!-- Label and input for user_id start -->
+  <div class="form-group">
+    <label for="user_id">
+      User
+    </label>
+
+    <!-- Input for user_id start -->
+    <input type="text" id="user_id" name="user_id" class="form-control">
+    <!-- Input for user_id end -->
+  </div>
+  <!-- Label and input for user_id end -->
+
+  <!-- Label and input for photo_id start -->
+  <div class="form-group">
+    <label for="photo_id">
+      Photo
+    </label>
+
+    <!-- Input for photo_id start -->
+    <input type="text" id="photo_id" name="photo_id" class="form-control">
+    <!-- Input for photo_id end -->
+  </div>
+  <!-- Label and input for photo_id end -->
+
+  <button class="btn btn-block btn-outline-secondary">
+    Create vote
+  </button>
+</form>
+
+<hr>
+
+<a href="/votes">
+  Go back
+</a>
