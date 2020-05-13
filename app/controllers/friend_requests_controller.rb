@@ -55,6 +55,22 @@ class FriendRequestsController < ApplicationController
     end
   end
 
+  def destroy_row_from_sender
+    @friend_request = FriendRequest.find(params.fetch("id_to_remove"))
+
+    @friend_request.destroy
+
+    redirect_to("/users/#{@friend_request.sender_id}", notice: "FriendRequest deleted successfully.")
+  end
+
+  def destroy_row_from_recipient
+    @friend_request = FriendRequest.find(params.fetch("id_to_remove"))
+
+    @friend_request.destroy
+
+    redirect_to("/users/#{@friend_request.recipient_id}", notice: "FriendRequest deleted successfully.")
+  end
+
   def destroy_row
     @friend_request = FriendRequest.find(params.fetch("id_to_remove"))
 

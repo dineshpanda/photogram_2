@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_friend_request/:id_to_remove", { :controller => "friend_requests", :action => "destroy_row" })
+  get("/delete_friend_request_from_recipient/:id_to_remove", { :controller => "friend_requests", :action => "destroy_row_from_recipient" })
+  get("/delete_friend_request_from_sender/:id_to_remove", { :controller => "friend_requests", :action => "destroy_row_from_sender" })
 
   #------------------------------
 
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_comment/:id_to_remove", { :controller => "comments", :action => "destroy_row" })
+  get("/delete_comment_from_photo/:id_to_remove", { :controller => "comments", :action => "destroy_row_from_photo" })
+  get("/delete_comment_from_commenter/:id_to_remove", { :controller => "comments", :action => "destroy_row_from_commenter" })
 
   #------------------------------
 
@@ -56,6 +60,8 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_vote/:id_to_remove", { :controller => "votes", :action => "destroy_row" })
+  get("/delete_vote_from_photo/:id_to_remove", { :controller => "votes", :action => "destroy_row_from_photo" })
+  get("/delete_vote_from_user/:id_to_remove", { :controller => "votes", :action => "destroy_row_from_user" })
 
   #------------------------------
 
@@ -75,6 +81,7 @@ Rails.application.routes.draw do
 
   # DELETE
   get("/delete_photo/:id_to_remove", { :controller => "photos", :action => "destroy_row" })
+  get("/delete_photo_from_owner/:id_to_remove", { :controller => "photos", :action => "destroy_row_from_owner" })
 
   #------------------------------
 
