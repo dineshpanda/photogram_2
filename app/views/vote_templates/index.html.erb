@@ -60,13 +60,21 @@
 
         <!-- Display vote.user_id start -->
         <td>
-          <%= vote.user.email %>
+          <% if vote.user.present? %>
+            <a href="/users/<%= vote.user.id %>">
+              <%= vote.user.email %>
+            </a>
+          <% end %>
         </td>
         <!-- Display vote.user_id end -->
 
         <!-- Display vote.photo_id start -->
         <td>
-          <%= vote.photo.caption %>
+          <% if vote.photo.present? %>
+            <a href="/photos/<%= vote.photo.id %>">
+              <%= vote.photo.caption %>
+            </a>
+          <% end %>
         </td>
         <!-- Display vote.photo_id end -->
 

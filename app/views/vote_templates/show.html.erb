@@ -38,7 +38,11 @@
       </dt>
       <!-- Display user_id start -->
       <dd>
-        <%= @vote.user_id %>
+        <% if @vote.user.present? %>
+          <a href="/users/<%= @vote.user_id %>">
+            <%= @vote.user.email %>
+          </a>
+        <% end %>
       </dd>
       <!-- Display user_id end -->
 
@@ -47,7 +51,11 @@
       </dt>
       <!-- Display photo_id start -->
       <dd>
-        <%= @vote.photo_id %>
+        <% if @vote.photo.present? %>
+          <a href="/photos/<%= @vote.photo_id %>">
+            <%= @vote.photo.caption %>
+          </a>
+        <% end %>
       </dd>
       <!-- Display photo_id end -->
 
