@@ -10,28 +10,22 @@
   <ul class="list-group list-group-flush">
     <% @photo.likes.each do |vote| %>
       <li class="list-group-item d-flex align-items-center justify-content-between">
-        <!-- Show link start -->
         <a href="/votes/<%= vote.id %>">
           <%= vote.user_id %>
         </a>
-        <!-- Show link end -->
 
-        <!-- Delete link start -->
         <%if current_user == vote.user %>
           <a href="/delete_vote_from_photo/<%= vote.id %>">
             Delete
           </a>
         <% end %>
-        <!-- Delete link end -->
 
       </li>
     <% end %>
 
     <div class="card-footer">
       <div class="collapse" id="photo_likes_new_form">
-        <!-- New associationcollection form start -->
         <%= render partial: "photo_templates/photo_likes_new_form" %>
-        <!-- New associationcollection form end -->
       </div>
     </div>
 

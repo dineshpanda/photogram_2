@@ -11,7 +11,6 @@
         </a>
       </div>
 
-      <!-- Edit link friend_request start -->
       <div class="col">
         <% if current_user == @friend_request.sender %>
           <a href="/friend_requests/<%= @friend_request.id %>/edit" class="btn btn-block btn-sm btn-outline-secondary">
@@ -19,9 +18,7 @@
           </a>
         <% end %>
       </div>
-      <!-- Edit link friend_request end -->
 
-      <!-- Delete link friend_request start -->
       <div class="col">
         <% if current_user == @friend_request.sender %>
           <a href="/delete_friend_request/<%= @friend_request.id %>" class="btn btn-block btn-sm btn-outline-secondary">
@@ -29,14 +26,12 @@
           </a>
         <% end %>
       </div>
-      <!-- Delete link friend_request end -->
     </div>
 
     <dl>
       <dt>
         Sender
       </dt>
-      <!-- Display sender_id start -->
       <dd>
         <% if @friend_request.sender.present? %>
           <a href="/users/<%= @friend_request.sender_id %>">
@@ -44,12 +39,10 @@
           </a>
         <% end %>
       </dd>
-      <!-- Display sender_id end -->
 
       <dt>
         Recipient
       </dt>
-      <!-- Display recipient_id start -->
       <dd>
         <% if @friend_request.recipient.present? %>
           <a href="/users/<%= @friend_request.recipient_id %>">
@@ -57,37 +50,28 @@
           </a>
         <% end %>
       </dd>
-      <!-- Display recipient_id end -->
 
       <dt>
         Status
       </dt>
-      <!-- Display status start -->
       <dd>
         <%= @friend_request.status %>
       </dd>
-      <!-- Display status end -->
 
       <dt>
         Created at
       </dt>
-      <!-- Display created_at start -->
       <dd>
         <%= time_ago_in_words(@friend_request.created_at) %> ago
       </dd>
-      <!-- Display created_at end -->
 
       <dt>
         Updated at
       </dt>
-      <!-- Display updated_at start -->
       <dd>
         <%= time_ago_in_words(@friend_request.updated_at) %> ago
       </dd>
-      <!-- Display updated_at end -->
     </dl>
   </div>
 </div>
 
-<!-- Show Page Customization starts -->
-<!-- Show Page Customization end -->

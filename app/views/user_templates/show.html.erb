@@ -17,70 +17,55 @@
       <dt>
         Username
       </dt>
-      <!-- Display username start -->
       <dd>
         <%= @user.username %>
       </dd>
-      <!-- Display username end -->
 
       <dt>
         Avatar
       </dt>
-      <!-- Display avatar start -->
       <dd>
         <img src="<%= @user.avatar %>" class="img-fluid">
       </dd>
-      <!-- Display avatar end -->
 
       <dt>
         First name
       </dt>
-      <!-- Display first_name start -->
       <dd>
         <%= @user.first_name %>
       </dd>
-      <!-- Display first_name end -->
 
       <dt>
         Last name
       </dt>
-      <!-- Display last_name start -->
       <dd>
         <%= @user.last_name %>
       </dd>
-      <!-- Display last_name end -->
 
       <dt>
         Bio
       </dt>
-      <!-- Display bio start -->
       <dd>
         <%= @user.bio %>
       </dd>
-      <!-- Display bio end -->
 
       <dt>
         Created at
       </dt>
-      <!-- Display created_at start -->
       <dd>
         <%= time_ago_in_words(@user.created_at) %> ago
       </dd>
-      <!-- Display created_at end -->
 
       <dt>
         Updated at
       </dt>
-      <!-- Display updated_at start -->
       <dd>
         <%= time_ago_in_words(@user.updated_at) %> ago
       </dd>
-      <!-- Display updated_at end -->
     </dl>
   </div>
 </div>
 
-<!-- Show Page Customization starts -->
 <div class="row mb-3">
   <div class="col-md-8 offset-md-2">
     <%= render partial: "user_templates/user_photos" %>
@@ -140,4 +125,3 @@
     <%= render partial: "user_templates/user_follows" %>
   </div>
 </div>
-<!-- Show Page Customization end -->

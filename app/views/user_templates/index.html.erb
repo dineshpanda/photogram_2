@@ -8,13 +8,9 @@
   </div>
 </div>
 
-<!-- Ransack Code start -->
 
-<!-- Ransack Code end -->
 
-<!-- Location Map Code start -->
 
-<!-- Location Map Code end -->
 
 <hr>
 
@@ -60,53 +56,37 @@
 
       <% @users.each do |user| %>
       <tr>
-        <!-- Display user.id start -->
         <td>
           <%= user.id %>
         </td>
-        <!-- Display user.id end -->
 
-        <!-- Display user.username start -->
         <td>
           <%= user.username %>
         </td>
-        <!-- Display user.username end -->
 
-        <!-- Display user.avatar start -->
         <td>
           <img src='<%= user.avatar %>' class='img-fluid'>
         </td>
-        <!-- Display user.avatar end -->
 
-        <!-- Display user.first_name start -->
         <td>
           <%= user.first_name %>
         </td>
-        <!-- Display user.first_name end -->
 
-        <!-- Display user.last_name start -->
         <td>
           <%= user.last_name %>
         </td>
-        <!-- Display user.last_name end -->
 
-        <!-- Display user.bio start -->
         <td>
           <%= user.bio %>
         </td>
-        <!-- Display user.bio end -->
 
-        <!-- Display user.created_at start -->
         <td>
           <%= time_ago_in_words(user.created_at) %> ago
         </td>
-        <!-- Display user.created_at end -->
 
-        <!-- Display user.updated_at start -->
         <td>
           <%= time_ago_in_words(user.updated_at) %> ago
         </td>
-        <!-- Display user.updated_at end -->
 
         <td>
           <a href="/users/<%= user.id %>">
