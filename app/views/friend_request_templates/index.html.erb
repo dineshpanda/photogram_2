@@ -1,0 +1,104 @@
+<div class="row mb-3">
+  <div class="col-md-12">
+    <h1>
+      All friend requests
+    </h1>
+
+    
+      <a href="/friend_requests/new" class="btn btn-block btn-outline-secondary">
+        Add a new friend request
+      </a>
+    
+  </div>
+</div>
+
+<!-- Ransack Code start -->
+
+<!-- Ransack Code end -->
+
+<!-- Location Map Code start -->
+
+<!-- Location Map Code end -->
+
+<hr>
+
+<div class="row mb-3">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Sender
+        </th>
+
+        <th>
+          Recipient
+        </th>
+
+        <th>
+          Status
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @friend_requests.each do |friend_request| %>
+      <tr>
+        <!-- Display friend_request.id start -->
+        <td>
+          <%= friend_request.id %>
+        </td>
+        <!-- Display friend_request.id end -->
+
+        <!-- Display friend_request.sender_id start -->
+        <td>
+          <%= friend_request.sender_id %>
+        </td>
+        <!-- Display friend_request.sender_id end -->
+
+        <!-- Display friend_request.recipient_id start -->
+        <td>
+          <%= friend_request.recipient_id %>
+        </td>
+        <!-- Display friend_request.recipient_id end -->
+
+        <!-- Display friend_request.status start -->
+        <td>
+          <%= friend_request.status %>
+        </td>
+        <!-- Display friend_request.status end -->
+
+        <!-- Display friend_request.created_at start -->
+        <td>
+          <%= time_ago_in_words(friend_request.created_at) %> ago
+        </td>
+        <!-- Display friend_request.created_at end -->
+
+        <!-- Display friend_request.updated_at start -->
+        <td>
+          <%= time_ago_in_words(friend_request.updated_at) %> ago
+        </td>
+        <!-- Display friend_request.updated_at end -->
+
+        <td>
+          <a href="/friend_requests/<%= friend_request.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
