@@ -39,7 +39,6 @@ class UserResource < ApplicationResource
     end
   end
 
-
   has_many :followers, resource: UserResource do
     assign_each do |user, users|
       users.select do |u|
@@ -48,10 +47,11 @@ class UserResource < ApplicationResource
     end
   end
 
+  many_to_many :liked_photos,
+               resource: PhotoResource
 
-  many_to_many :liked_photos, resource: PhotoResource
-
-  many_to_many :commented_photos, resource: PhotoResource
+  many_to_many :commented_photos,
+               resource: PhotoResource
 
   has_many :timeline, resource: PhotoResource do
     assign_each do |user, photos|
@@ -60,7 +60,6 @@ class UserResource < ApplicationResource
       end
     end
   end
-
 
 
   filter :owner_id, :integer do

@@ -19,18 +19,19 @@ class PhotoResource < ApplicationResource
 
   # Indirect associations
 
-  many_to_many :fans, resource: UserResource
+  many_to_many :fans,
+               resource: UserResource
 
-  many_to_many :commenters, resource: UserResource
+  many_to_many :commenters,
+               resource: UserResource
 
-  has_many :followers, resource: UserResource do
+  has_many :followers, resource: UserResource, primary_key: :owner_id do
     assign_each do |photo, users|
       users.select do |u|
         u.id.in?(photo.followers.map(&:id))
       end
     end
   end
-
 
 
   filter :sender_id, :integer do
