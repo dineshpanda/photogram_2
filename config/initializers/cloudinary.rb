@@ -3,6 +3,7 @@ Cloudinary.config do |config|
   config.api_key = ENV["CLOUDINARY_API_KEY"]
   config.api_secret = ENV["CLOUDINARY_API_SECRET"]
   config.cdn_subdomain = true
+  config.secure = true
 end
 
 # Sign up for a free account at Cloudinary.com.
