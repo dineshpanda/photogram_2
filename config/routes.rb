@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  match "/404", to: "not_found#builder", via: :all
+
   scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do
     scope module: 'api/v1', as: 'api' do
       resources :friend_requests
