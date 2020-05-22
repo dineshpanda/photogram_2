@@ -1,7 +1,8 @@
 class NotFoundController < ApplicationController
-  def builder
-    builder_url = "https://builder.io/api/v1/html/page?url=#{request.original_url}&apiKey=#{ENV.fetch("BUILDER_API_KEY")}"
 
+  def builder
+    builder_page_url = ERB::Util.url_encode(request.original_url)
+    builder_url = "https://builder.io/api/v1/html/page?url=#{builder_page_url}&apiKey=#{ENV.fetch("BUILDER_API_KEY")}"
     builder_response = HTTParty.get(builder_url, follow_redirects: true)
 
     if builder_response.code != 404
