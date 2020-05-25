@@ -90,7 +90,11 @@
 
         <!-- Display photo.owner_id start -->
         <td>
-          <%= photo.owner.email %>
+          <% if photo.owner.present? %>
+            <a href="/users/<%= photo.owner.id %>">
+              <%= photo.owner.email %>
+            </a>
+          <% end %>
         </td>
         <!-- Display photo.owner_id end -->
 

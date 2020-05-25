@@ -70,13 +70,21 @@
 
         <!-- Display comment.commenter_id start -->
         <td>
-          <%= comment.commenter.email %>
+          <% if comment.commenter.present? %>
+            <a href="/users/<%= comment.commenter.id %>">
+              <%= comment.commenter.email %>
+            </a>
+          <% end %>
         </td>
         <!-- Display comment.commenter_id end -->
 
         <!-- Display comment.photo_id start -->
         <td>
-          <%= comment.photo.caption %>
+          <% if comment.photo.present? %>
+            <a href="/photos/<%= comment.photo.id %>">
+              <%= comment.photo.caption %>
+            </a>
+          <% end %>
         </td>
         <!-- Display comment.photo_id end -->
 
