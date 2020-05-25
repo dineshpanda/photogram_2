@@ -1,4 +1,23 @@
 Rails.application.routes.draw do
+  # Routes for the Friend request resource:
+
+  # CREATE
+  get("/friend_requests/new", { :controller => "friend_requests", :action => "new_form" })
+  post("/create_friend_request", { :controller => "friend_requests", :action => "create_row" })
+
+  # READ
+  get("/friend_requests", { :controller => "friend_requests", :action => "index" })
+  get("/friend_requests/:id_to_display", { :controller => "friend_requests", :action => "show" })
+
+  # UPDATE
+  get("/friend_requests/:prefill_with_id/edit", { :controller => "friend_requests", :action => "edit_form" })
+  post("/update_friend_request/:id_to_modify", { :controller => "friend_requests", :action => "update_row" })
+
+  # DELETE
+  get("/delete_friend_request/:id_to_remove", { :controller => "friend_requests", :action => "destroy_row" })
+
+  #------------------------------
+
   # Routes for the Comment resource:
 
   # CREATE
