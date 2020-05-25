@@ -12,17 +12,13 @@
   </div>
 </div>
 
-<!-- Ransack Code start -->
 <div class="row">
   <div class="col-md-12 mb-3">
     <%= render partial: "friend_request_templates/friend_requests_search_form" %>
   </div>
 </div>
-<!-- Ransack Code end -->
 
-<!-- Location Map Code start -->
 
-<!-- Location Map Code end -->
 
 <hr>
 
@@ -60,13 +56,10 @@
 
       <% @friend_requests.each do |friend_request| %>
       <tr>
-        <!-- Display friend_request.id start -->
         <td>
           <%= friend_request.id %>
         </td>
-        <!-- Display friend_request.id end -->
 
-        <!-- Display friend_request.sender_id start -->
         <td>
           <% if friend_request.sender.present? %>
             <a href="/users/<%= friend_request.sender.id %>">
@@ -74,9 +67,7 @@
             </a>
           <% end %>
         </td>
-        <!-- Display friend_request.sender_id end -->
 
-        <!-- Display friend_request.recipient_id start -->
         <td>
           <% if friend_request.recipient.present? %>
             <a href="/users/<%= friend_request.recipient.id %>">
@@ -84,25 +75,18 @@
             </a>
           <% end %>
         </td>
-        <!-- Display friend_request.recipient_id end -->
 
-        <!-- Display friend_request.status start -->
         <td>
           <%= friend_request.status %>
         </td>
-        <!-- Display friend_request.status end -->
 
-        <!-- Display friend_request.created_at start -->
         <td>
           <%= time_ago_in_words(friend_request.created_at) %> ago
         </td>
-        <!-- Display friend_request.created_at end -->
 
-        <!-- Display friend_request.updated_at start -->
         <td>
           <%= time_ago_in_words(friend_request.updated_at) %> ago
         </td>
-        <!-- Display friend_request.updated_at end -->
 
         <td>
           <a href="/friend_requests/<%= friend_request.id %>">
