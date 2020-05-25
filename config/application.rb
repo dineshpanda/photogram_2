@@ -21,6 +21,16 @@ Bundler.require(*Rails.groups)
 
 module Photogram2
   class Application < Rails::Application
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
+
+    config.exceptions_app = self.routes
+
+
     # In order for Graphiti to generate links, you need to set the routes host.
     # When not explicitly set, via the HOST env var, this will fall back to
     # the rails server settings.
