@@ -68,3 +68,5 @@ end
 gem 'httparty', '~> 0.18.0'
 gem 'rack-cors', '~> 1.1'
 gem "rollbar"
+gem "kaminari"
+gem "bootstrap4-kaminari-views"
