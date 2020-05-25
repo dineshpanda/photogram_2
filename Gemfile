@@ -66,3 +66,4 @@ group :test do
   gem 'database_cleaner'
 end
 gem 'httparty', '~> 0.18.0'
+gem 'rack-cors', '~> 1.1'
