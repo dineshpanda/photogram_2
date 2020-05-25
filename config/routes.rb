@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   # CREATE
   get("/comments/new", { :controller => "comments", :action => "new_form" })
   post("/create_comment", { :controller => "comments", :action => "create_row" })
+  post("/create_comment_from_photo", { :controller => "comments", :action => "create_row_from_photo" })
 
   # READ
   get("/comments", { :controller => "comments", :action => "index" })
@@ -49,6 +50,7 @@ Rails.application.routes.draw do
   # CREATE
   get("/votes/new", { :controller => "votes", :action => "new_form" })
   post("/create_vote", { :controller => "votes", :action => "create_row" })
+  post("/create_vote_from_photo", { :controller => "votes", :action => "create_row_from_photo" })
 
   # READ
   get("/votes", { :controller => "votes", :action => "index" })
