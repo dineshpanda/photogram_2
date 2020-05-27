@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  use_doorkeeper
+
   match "/404", to: "not_found#builder", via: :all
 
   scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do

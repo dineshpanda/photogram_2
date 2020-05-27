@@ -161,6 +161,8 @@ GEM
     diffy (3.3.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    doorkeeper (5.4.0)
+      railties (>= 5)
     dotenv (2.7.5)
     dotenv-rails (2.7.5)
       dotenv (= 2.7.5)
@@ -465,6 +467,7 @@ DEPENDENCIES
   coffee-rails
   database_cleaner
   devise
+  doorkeeper
   dotenv-rails
   draft_generators!
   factory_bot_rails
