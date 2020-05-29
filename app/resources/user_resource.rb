@@ -79,4 +79,14 @@ class UserResource < ApplicationResource
       scope.eager_load(:followers).where(:friend_requests => {:sender_id => value})
     end
   end
+
+  def base_scope
+    if context&.current_user
+      User.where(id: context.current_user)
+    elsif context&.current_resource_owner
+      User.where(id: context.current_resource_owner)
+    else
+      User.none
+    end
+  end
 end
