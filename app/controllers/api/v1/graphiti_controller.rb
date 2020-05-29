@@ -9,6 +9,10 @@ class Api::V1::GraphitiController < ApplicationController
     User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
   end
 
+  def me
+    render json: current_resource_owner.to_json
+  end
+
   private
 
   def log_access_token
