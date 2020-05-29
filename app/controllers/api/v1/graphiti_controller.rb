@@ -1,6 +1,6 @@
 class Api::V1::GraphitiController < ApplicationController
   skip_before_action :authenticate_user!
-  before_action :doorkeeper_authorize!
+  before_action -> { doorkeeper_authorize! :public }
   before_action :log_access_token
 
   include Graphiti::Rails::Responders
