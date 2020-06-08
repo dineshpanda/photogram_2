@@ -10,6 +10,8 @@ class UserResource < ApplicationResource
   attribute :last_name, :string
   attribute :bio, :string
 
+  secondary_endpoint '/current_user', [:show]
+
   # Direct associations
 
   has_many   :received_friend_requests,
@@ -89,4 +91,5 @@ class UserResource < ApplicationResource
       User.none
     end
   end
+
 end
