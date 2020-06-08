@@ -5,7 +5,8 @@ class Api::V1::UsersController < Api::V1::GraphitiController
   end
 
   def show
-    user = UserResource.find(params)
+    base_scope = params[:id].blank? ? User.where(id: current_resource_owner) : User.all
+    user = UserResource.find(params, base_scope)
     respond_with(user)
   end
 
