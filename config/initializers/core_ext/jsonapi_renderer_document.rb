@@ -23,7 +23,6 @@ module JsonapiRendererDocument
     # This is implemented to simplify the front end logic to
     # fetch included (relationships) data.
     #
-    byebug
     res_hash[:data] = post_process(res_hash)
     res_hash.except(:included) if res_hash[:included].any?
   end
