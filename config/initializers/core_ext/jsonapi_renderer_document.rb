@@ -24,12 +24,13 @@ module JsonapiRendererDocument
     # fetch included (relationships) data.
     #
     res_hash[:data] = post_process(res_hash)
-    res_hash.except(:included) if res_hash[:included].any?
+    res_hash.delete(:included)
+    res_hash
   end
 
   def post_process(hash)
 
-    return if hash[:included].blank?
+    return hash[:data] if hash[:included].blank?
 
     if hash[:data].respond_to?(:to_ary)
       hash[:data].map do |primary_resource|
