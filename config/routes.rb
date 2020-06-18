@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  match '/404', to: 'not_found#builder', via: :all
+  use_doorkeeper
   scope path: ApplicationResource.endpoint_namespace, defaults: { format: :jsonapi } do
     scope module: 'api/v1', as: 'api' do
+      get "/current_user" => "users#show"
+
       resources :friend_requests
 
       resources :comments
