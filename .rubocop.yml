@@ -6,7 +6,7 @@ require:
   - rubocop-rails
 
 Naming/AccessorMethodName:
-  Description: Check the naming of accessor methods for get_/set_.
+  Description: 'Check the naming of accessor methods for get_/set_.'
   Enabled: false
 
 Style/Alias:

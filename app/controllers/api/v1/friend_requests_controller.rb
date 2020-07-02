@@ -13,7 +13,7 @@ class Api::V1::FriendRequestsController < Api::V1::GraphitiController
     friend_request = FriendRequestResource.build(params)
 
     if friend_request.save
-      render jsonapi: friend_request, status: 201
+      render jsonapi: friend_request, status: :created
     else
       render jsonapi_errors: friend_request
     end
@@ -22,7 +22,7 @@ class Api::V1::FriendRequestsController < Api::V1::GraphitiController
   def update
     friend_request = FriendRequestResource.find(params)
 
-    if friend_request.update_attributes
+    if friend_request.update
       render jsonapi: friend_request
     else
       render jsonapi_errors: friend_request
@@ -33,7 +33,7 @@ class Api::V1::FriendRequestsController < Api::V1::GraphitiController
     friend_request = FriendRequestResource.find(params)
 
     if friend_request.destroy
-      render jsonapi: { meta: {} }, status: 200
+      render jsonapi: { meta: {} }, status: :ok
     else
       render jsonapi_errors: friend_request
     end
