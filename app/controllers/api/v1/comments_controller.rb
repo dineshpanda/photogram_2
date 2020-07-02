@@ -13,7 +13,7 @@ class Api::V1::CommentsController < Api::V1::GraphitiController
     comment = CommentResource.build(params)
 
     if comment.save
-      render jsonapi: comment, status: 201
+      render jsonapi: comment, status: :created
     else
       render jsonapi_errors: comment
     end
@@ -22,7 +22,7 @@ class Api::V1::CommentsController < Api::V1::GraphitiController
   def update
     comment = CommentResource.find(params)
 
-    if comment.update_attributes
+    if comment.update
       render jsonapi: comment
     else
       render jsonapi_errors: comment
@@ -33,7 +33,7 @@ class Api::V1::CommentsController < Api::V1::GraphitiController
     comment = CommentResource.find(params)
 
     if comment.destroy
-      render jsonapi: { meta: {} }, status: 200
+      render jsonapi: { meta: {} }, status: :ok
     else
       render jsonapi_errors: comment
     end

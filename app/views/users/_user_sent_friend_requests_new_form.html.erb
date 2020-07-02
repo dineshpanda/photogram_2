@@ -1,0 +1,16 @@
+<%= form_with(model: @friend_request, local: true) do |f| %>
+
+  <%= f.hidden_field :sender_id, value: @user.id %>
+
+  <div class="form-group">
+    <%= f.label :recipient_id %>
+    <%= f.text_field :recipient_id, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status %>
+    <%= f.text_field :status, class: "form-control" %>
+  </div>
+
+  <%= f.submit "Create friend request", class: "btn btn-block btn-outline-secondary" %>
+<% end %>
