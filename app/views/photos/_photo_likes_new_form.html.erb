@@ -1,0 +1,8 @@
+<%= form_with(model: @vote, local: true) do |f| %>
+
+  <%= f.hidden_field :user_id, value: current_user.id %>
+
+  <%= f.hidden_field :photo_id, value: @photo.id %>
+
+  <%= f.submit "Create vote", class: "btn btn-block btn-outline-secondary" %>
+<% end %>
