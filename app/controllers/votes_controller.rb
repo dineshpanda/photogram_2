@@ -1,105 +1,72 @@
 class VotesController < ApplicationController
-  before_action :current_user_must_be_vote_user, :only => [:show, :edit_form, :update_row, :destroy_row]
+  before_action :current_user_must_be_vote_user, only: %i[show edit update destroy]
 
-  def current_user_must_be_vote_user
-    vote = Vote.find(params["id_to_display"] || params["prefill_with_id"] || params["id_to_modify"] || params["id_to_remove"])
+  before_action :set_vote, only: %i[show edit update destroy]
 
-    unless current_user == vote.user
-      redirect_to :back, :alert => "You are not authorized for that."
-    end
-  end
-
+  # GET /votes
   def index
     @q = current_user.likes.ransack(params[:q])
-    @votes = @q.result(:distinct => true).includes(:user, :photo).page(params[:page]).per(10)
-
-    render("vote_templates/index.html.erb")
+    @votes = @q.result(distinct: true).includes(:user, :photo).page(params[:page]).per(10)
   end
 
-  def show
-    @vote = Vote.find(params.fetch("id_to_display"))
+  # GET /votes/1
+  def show; end
 
-    render("vote_templates/show.html.erb")
-  end
-
-  def new_form
+  # GET /votes/new
+  def new
     @vote = Vote.new
-
-    render("vote_templates/new_form.html.erb")
   end
 
-  def create_row
-    @vote = Vote.new
+  # GET /votes/1/edit
+  def edit; end
 
-    @vote.user_id = params.fetch("user_id")
-    @vote.photo_id = params.fetch("photo_id")
+  # POST /votes
+  def create
+    @vote = Vote.new(vote_params)
 
-    if @vote.valid?
-      @vote.save
-
-      redirect_back(:fallback_location => "/votes", :notice => "Vote created successfully.")
+    if @vote.save
+      message = "Vote was successfully created."
+      if Rails.application.routes.recognize_path(request.referer)[:controller] != Rails.application.routes.recognize_path(request.path)[:controller]
+        redirect_back fallback_location: request.referer, notice: message
+      else
+        redirect_to @vote, notice: message
+      end
     else
-      render("vote_templates/new_form_with_errors.html.erb")
+      render :new
     end
   end
 
-  def create_row_from_photo
-    @vote = Vote.new
-
-    @vote.user_id = params.fetch("user_id")
-    @vote.photo_id = params.fetch("photo_id")
-
-    if @vote.valid?
-      @vote.save
-
-      redirect_to("/photos/#{@vote.photo_id}", notice: "Vote created successfully.")
+  # PATCH/PUT /votes/1
+  def update
+    if @vote.update(vote_params)
+      redirect_to @vote, notice: "Vote was successfully updated."
     else
-      render("vote_templates/new_form_with_errors.html.erb")
+      render :edit
     end
   end
 
-  def edit_form
-    @vote = Vote.find(params.fetch("prefill_with_id"))
-
-    render("vote_templates/edit_form.html.erb")
+  # DELETE /votes/1
+  def destroy
+    @vote.destroy
+    redirect_to votes_url, notice: "Vote was successfully destroyed."
   end
 
-  def update_row
-    @vote = Vote.find(params.fetch("id_to_modify"))
+  private
 
-    
-    @vote.photo_id = params.fetch("photo_id")
-
-    if @vote.valid?
-      @vote.save
-
-      redirect_to("/votes/#{@vote.id}", :notice => "Vote updated successfully.")
-    else
-      render("vote_templates/edit_form_with_errors.html.erb")
+  def current_user_must_be_vote_user
+    set_vote
+    unless current_user == @vote.user
+      redirect_back fallback_location: root_path, alert: "You are not authorized for that."
     end
   end
 
-  def destroy_row_from_user
-    @vote = Vote.find(params.fetch("id_to_remove"))
-
-    @vote.destroy
-
-    redirect_to("/users/#{@vote.user_id}", notice: "Vote deleted successfully.")
+  # Use callbacks to share common setup or constraints between actions.
+  def set_vote
+    @vote = Vote.find(params[:id])
   end
 
-  def destroy_row_from_photo
-    @vote = Vote.find(params.fetch("id_to_remove"))
-
-    @vote.destroy
-
-    redirect_to("/photos/#{@vote.photo_id}", notice: "Vote deleted successfully.")
-  end
-
-  def destroy_row
-    @vote = Vote.find(params.fetch("id_to_remove"))
-
-    @vote.destroy
-
-    redirect_to("/votes", :notice => "Vote deleted successfully.")
+  # Only allow a trusted parameter "white list" through.
+  def vote_params
+    params.require(:vote).permit(:user_id, :photo_id)
   end
 end
