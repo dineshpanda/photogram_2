@@ -1,93 +1,80 @@
 class PhotosController < ApplicationController
-  before_action :current_user_must_be_photo_owner, :only => [:edit_form, :update_row, :destroy_row]
+  before_action :current_user_must_be_photo_owner, only: %i[edit update destroy]
 
-  def current_user_must_be_photo_owner
-    photo = Photo.find(params["id_to_display"] || params["prefill_with_id"] || params["id_to_modify"] || params["id_to_remove"])
+  before_action :set_photo, only: %i[show edit update destroy]
 
-    unless current_user == photo.owner
-      redirect_to :back, :alert => "You are not authorized for that."
-    end
-  end
-
+  # GET /photos
   def index
     @q = current_user.photos.ransack(params[:q])
-    @photos = @q.result(:distinct => true).includes(:owner, :likes, :comments, :followers, :commenters, :fans).page(params[:page]).per(10)
-    @location_hash = Gmaps4rails.build_markers(@photos.where.not(:location_latitude => nil)) do |photo, marker|
+    @photos = @q.result(distinct: true).includes(:owner, :likes, :comments, :followers, :commenters, :fans).page(params[:page]).per(10)
+    @location_hash = Gmaps4rails.build_markers(@photos.where.not(location_latitude: nil)) do |photo, marker|
       marker.lat photo.location_latitude
       marker.lng photo.location_longitude
       marker.infowindow "<h5><a href='/photos/#{photo.id}'>#{photo.caption}</a></h5><small>#{photo.location_formatted_address}</small>"
     end
-
-    render("photo_templates/index.html.erb")
   end
 
+  # GET /photos/1
   def show
     @comment = Comment.new
     @vote = Vote.new
-    @photo = Photo.find(params.fetch("id_to_display"))
-
-    render("photo_templates/show.html.erb")
   end
 
-  def new_form
+  # GET /photos/new
+  def new
     @photo = Photo.new
-
-    render("photo_templates/new_form.html.erb")
   end
 
-  def create_row
-    @photo = Photo.new
+  # GET /photos/1/edit
+  def edit; end
 
-    @photo.caption = params.fetch("caption")
-    @photo.image = params.fetch("image") if params.key?("image")
-    @photo.location = params.fetch("location")
-    @photo.owner_id = params.fetch("owner_id")
+  # POST /photos
+  def create
+    @photo = Photo.new(photo_params)
 
-    if @photo.valid?
-      @photo.save
-
-      redirect_back(:fallback_location => "/photos", :notice => "Photo created successfully.")
+    if @photo.save
+      message = "Photo was successfully created."
+      if Rails.application.routes.recognize_path(request.referer)[:controller] != Rails.application.routes.recognize_path(request.path)[:controller]
+        redirect_back fallback_location: request.referer, notice: message
+      else
+        redirect_to @photo, notice: message
+      end
     else
-      render("photo_templates/new_form_with_errors.html.erb")
+      render :new
     end
   end
 
-  def edit_form
-    @photo = Photo.find(params.fetch("prefill_with_id"))
-
-    render("photo_templates/edit_form.html.erb")
-  end
-
-  def update_row
-    @photo = Photo.find(params.fetch("id_to_modify"))
-
-    @photo.caption = params.fetch("caption")
-    @photo.image = params.fetch("image") if params.key?("image")
-    @photo.location = params.fetch("location")
-    
-
-    if @photo.valid?
-      @photo.save
-
-      redirect_to("/photos/#{@photo.id}", :notice => "Photo updated successfully.")
+  # PATCH/PUT /photos/1
+  def update
+    if @photo.update(photo_params)
+      redirect_to @photo, notice: "Photo was successfully updated."
     else
-      render("photo_templates/edit_form_with_errors.html.erb")
+      render :edit
     end
   end
 
-  def destroy_row_from_owner
-    @photo = Photo.find(params.fetch("id_to_remove"))
-
+  # DELETE /photos/1
+  def destroy
     @photo.destroy
-
-    redirect_to("/users/#{@photo.owner_id}", notice: "Photo deleted successfully.")
+    redirect_to photos_url, notice: "Photo was successfully destroyed."
   end
 
-  def destroy_row
-    @photo = Photo.find(params.fetch("id_to_remove"))
+  private
 
-    @photo.destroy
+  def current_user_must_be_photo_owner
+    set_photo
+    unless current_user == @photo.owner
+      redirect_back fallback_location: root_path, alert: "You are not authorized for that."
+    end
+  end
 
-    redirect_to("/photos", :notice => "Photo deleted successfully.")
+  # Use callbacks to share common setup or constraints between actions.
+  def set_photo
+    @photo = Photo.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def photo_params
+    params.require(:photo).permit(:caption, :image, :location, :owner_id)
   end
 end
