@@ -1,108 +1,73 @@
 class CommentsController < ApplicationController
-  before_action :current_user_must_be_comment_commenter, :only => [:edit_form, :update_row, :destroy_row]
+  before_action :current_user_must_be_comment_commenter, only: %i[edit_form update_row destroy_row]
 
   def current_user_must_be_comment_commenter
     comment = Comment.find(params["id_to_display"] || params["prefill_with_id"] || params["id_to_modify"] || params["id_to_remove"])
 
     unless current_user == comment.commenter
-      redirect_to :back, :alert => "You are not authorized for that."
+      redirect_to :back, alert: "You are not authorized for that."
     end
   end
 
+  before_action :set_comment, only: %i[show edit update destroy]
+
+  # GET /comments
   def index
     @q = Comment.ransack(params[:q])
-    @comments = @q.result(:distinct => true).includes(:commenter, :photo).page(params[:page]).per(10)
-
-    render("comment_templates/index.html.erb")
+    @comments = @q.result(distinct: true).includes(:commenter, :photo).page(params[:page]).per(10)
   end
 
-  def show
-    @comment = Comment.find(params.fetch("id_to_display"))
+  # GET /comments/1
+  def show; end
 
-    render("comment_templates/show.html.erb")
-  end
-
-  def new_form
+  # GET /comments/new
+  def new
     @comment = Comment.new
-
-    render("comment_templates/new_form.html.erb")
   end
 
-  def create_row
-    @comment = Comment.new
+  # GET /comments/1/edit
+  def edit; end
 
-    @comment.body = params.fetch("body")
-    @comment.commenter_id = params.fetch("commenter_id")
-    @comment.photo_id = params.fetch("photo_id")
+  # POST /comments
+  def create
+    @comment = Comment.new(comment_params)
 
-    if @comment.valid?
-      @comment.save
-
-      redirect_back(:fallback_location => "/comments", :notice => "Comment created successfully.")
+    if @comment.save
+      message = "Comment was successfully created."
+      if Rails.application.routes.recognize_path(request.referer)[:controller] != Rails.application.routes.recognize_path(request.path)[:controller]
+        redirect_back fallback_location: request.referer, notice: message
+      else
+        redirect_to @comment, notice: message
+      end
     else
-      render("comment_templates/new_form_with_errors.html.erb")
+      render :new
     end
   end
 
-  def create_row_from_photo
-    @comment = Comment.new
-
-    @comment.body = params.fetch("body")
-    @comment.commenter_id = params.fetch("commenter_id")
-    @comment.photo_id = params.fetch("photo_id")
-
-    if @comment.valid?
-      @comment.save
-
-      redirect_to("/photos/#{@comment.photo_id}", notice: "Comment created successfully.")
+  # PATCH/PUT /comments/1
+  def update
+    if @comment.update(comment_params)
+      redirect_to @comment, notice: "Comment was successfully updated."
     else
-      render("comment_templates/new_form_with_errors.html.erb")
+      render :edit
     end
   end
 
-  def edit_form
-    @comment = Comment.find(params.fetch("prefill_with_id"))
-
-    render("comment_templates/edit_form.html.erb")
-  end
-
-  def update_row
-    @comment = Comment.find(params.fetch("id_to_modify"))
-
-    @comment.body = params.fetch("body")
-    
-    @comment.photo_id = params.fetch("photo_id")
-
-    if @comment.valid?
-      @comment.save
-
-      redirect_to("/comments/#{@comment.id}", :notice => "Comment updated successfully.")
-    else
-      render("comment_templates/edit_form_with_errors.html.erb")
-    end
-  end
-
-  def destroy_row_from_commenter
-    @comment = Comment.find(params.fetch("id_to_remove"))
-
+  # DELETE /comments/1
+  def destroy
     @comment.destroy
-
-    redirect_to("/users/#{@comment.commenter_id}", notice: "Comment deleted successfully.")
+    redirect_to comments_url, notice: "Comment was successfully destroyed."
   end
 
-  def destroy_row_from_photo
-    @comment = Comment.find(params.fetch("id_to_remove"))
+  private
 
-    @comment.destroy
-
-    redirect_to("/photos/#{@comment.photo_id}", notice: "Comment deleted successfully.")
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
   end
 
-  def destroy_row
-    @comment = Comment.find(params.fetch("id_to_remove"))
-
-    @comment.destroy
-
-    redirect_to("/comments", :notice => "Comment deleted successfully.")
+  # Only allow a trusted parameter "white list" through.
+  def comment_params
+    params.require(:comment).permit(:body, :commenter_id, :photo_id)
   end
 end

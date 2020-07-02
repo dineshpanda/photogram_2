@@ -1,0 +1,49 @@
+<% was_validated = vote.errors.any? %>
+
+<%= form_with(model: vote, local: true, novalidate: true, class: "mb-3") do |f| %>
+  <div class="form-group">
+    <% user_id_class = "form-control" %>
+    <% user_id_was_invalid = vote.errors.include?(:user_id) %>
+
+    <% if was_validated %>
+      <% if user_id_was_invalid %>
+        <% user_id_class << " is-invalid" %>
+      <% else %>
+        <% user_id_class << " is-valid" %>
+      <% end %>
+    <% end %>
+
+    <%= f.label :user_id %>
+    <%= f.select :user_id, options_from_collection_for_select(User.all, :id, :email, @vote.user_id), {}, class: "form-control" %>
+    <% if user_id_was_invalid %>
+      <% vote.errors.full_messages_for(:user_id).each do |message| %>
+        <div class="invalid-feedback d-flex">
+          <%= message %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <% photo_id_class = "form-control" %>
+    <% photo_id_was_invalid = vote.errors.include?(:photo_id) %>
+
+    <% if was_validated %>
+      <% if photo_id_was_invalid %>
+        <% photo_id_class << " is-invalid" %>
+      <% else %>
+        <% photo_id_class << " is-valid" %>
+      <% end %>
+    <% end %>
+
+    <%= f.label :photo_id %>
+    <%= f.select :photo_id, options_from_collection_for_select(Photo.all, :id, :caption, @vote.photo_id), {}, class: "form-control" %>
+    <% if photo_id_was_invalid %>
+      <% vote.errors.full_messages_for(:photo_id).each do |message| %>
+        <div class="invalid-feedback d-flex">
+          <%= message %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= f.button class: "btn btn-outline-secondary btn-block" %>
+<% end %>

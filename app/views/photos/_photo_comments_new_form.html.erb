@@ -1,0 +1,13 @@
+<%= form_with(model: @comment, local: true) do |f| %>
+
+  <div class="form-group">
+    <%= f.label :body %>
+    <%= f.text_area :body, rows: "3", class: "form-control" %>
+  </div>
+
+  <input type="hidden" name="commenter_id" value="<%= current_user.id %>">
+
+  <%= f.hidden_field :photo_id, value: @photo.id %>
+
+  <%= f.submit "Create comment", class: "btn btn-block btn-outline-secondary" %>
+<% end %>
