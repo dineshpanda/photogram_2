@@ -75,7 +75,7 @@ end
 gem "activerecord-import"
 gem "bootstrap3-datetimepicker-rails", "~> 4.17.43"
 gem "bootstrap4-kaminari-views"
-gem "httparty", "~> 0.18.0"
+gem "httparty", "~> 0.21.0"
 gem "kaminari"
 gem "momentjs-rails", ">= 2.9.0"
 gem "rack-cors", "~> 1.1"
